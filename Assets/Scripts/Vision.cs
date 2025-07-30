@@ -7,49 +7,50 @@ public class Vision : MonoBehaviour
 
     public float rangeOfVision;
     public float angleOfVision;
-    public LayerMask targetLayers;
     public LayerMask obstacleLayers;
 
-    public Collider targetObject;
+    public GameObject player;
+
+    public bool playerDetected;
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, rangeOfVision, targetLayers);
+        playerDetected = false;
 
-        for (int i = 0; i < colliders.Length; i++)
+        Vector3 directionToTarget = Vector3.Normalize(player.transform.position - transform.position);
+
+        float angleToTarget = Vector3.Angle(transform.right, directionToTarget);
+
+        float distanceToTarget = Vector3.Distance(player.transform.position, transform.position);
+
+        if (angleToTarget < angleOfVision)
         {
-            Collider collider = colliders[i];
-
-            Vector3 directionToTarget = Vector3.Normalize(collider.bounds.center - transform.position);
-
-            float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
-
-            if (angleToTarget < angleOfVision)
+            if (distanceToTarget < rangeOfVision)
             {
-                if (!Physics.Linecast(transform.position, collider.bounds.center, obstacleLayers))
+                if (!Physics.Linecast(transform.position, player.transform.position, obstacleLayers))
                 {
-                    targetObject = collider;
-                    break;
+                    playerDetected = true;
                 }
-
             }
+
         }
+
+
+
+
+
+
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, rangeOfVision);
 
-        Vector3 rightDirection = Quaternion.Euler(0, 0, angleOfVision) * transform.forward;
-        Gizmos.DrawRay(transform.position, rightDirection * rangeOfVision);
-
-        Vector3 leftDirection = Quaternion.Euler(0, 0, -angleOfVision) * transform.forward;
-        Gizmos.DrawRay(transform.position, leftDirection * rangeOfVision);
     }
 }

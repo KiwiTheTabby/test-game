@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sight : MonoBehaviour
+public class Life : MonoBehaviour
 {
+    public float health;
+    public int maxHealth;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +15,9 @@ public class Sight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

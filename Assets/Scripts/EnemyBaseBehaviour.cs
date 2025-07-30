@@ -12,14 +12,13 @@ public class EnemyBaseBehaviour : MonoBehaviour
 
     public EnemyStates currentState;
 
+    public float contactDamage;
+
     public float angleToPlayer;
 
     public float moveSpeed;
     public float currentSpeed;
     public float maxSpeed;
-    public int health;
-    public int maxHealth;
-    public int contactDamage;
     public float timerForResting;
     public float lengthWhenResting;
 
@@ -69,7 +68,7 @@ public class EnemyBaseBehaviour : MonoBehaviour
             currentState = EnemyStates.patrolling;
         }
 
-        if (vision.targetObject != null)
+        if (vision.playerDetected)
         {
             currentState = EnemyStates.followingPlayer;
             onAlert = true;
@@ -105,6 +104,31 @@ public class EnemyBaseBehaviour : MonoBehaviour
             currentState = EnemyStates.resting;
             onAlert = false;
         }
+
+        if (vision.playerDetected)
+        {
+            currentState = EnemyStates.followingPlayer;
+        }
+
+        timerForResting -= 1 * Time.deltaTime;
+
+        if (timerForResting > 0)
+        {
+            currentSpeed += moveSpeed * Time.deltaTime;
+
+            if (currentSpeed > maxSpeed)
+            {
+                currentSpeed = maxSpeed;
+            }
+
+            transform.Translate(currentSpeed * Time.deltaTime, 0, 0);
+        }
+
+        else if (Random.Range(1, movementFrequency/2) == 1)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, Random.Range(-180, 180));
+            timerForResting = lengthWhenResting;
+        }
     }
 
     public void ChasingPlayer()
@@ -123,7 +147,7 @@ public class EnemyBaseBehaviour : MonoBehaviour
 
         transform.Translate(currentSpeed * Time.deltaTime, 0, 0);
 
-        if (vision.targetObject == null)
+        if (!vision.playerDetected)
         {
             currentState = EnemyStates.patrolling;
             timeSinceAlert = 0;
@@ -132,10 +156,20 @@ public class EnemyBaseBehaviour : MonoBehaviour
 
     public void AttackingPlayer()
     {
-        if (vision.targetObject == null)
+        if (!vision.playerDetected)
         {
             currentState = EnemyStates.patrolling;
             timeSinceAlert = 0;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Life life = collision.GetComponent<Life>();
+
+        if (life != null)
+        {
+            life.health -= contactDamage;
         }
     }
 }
