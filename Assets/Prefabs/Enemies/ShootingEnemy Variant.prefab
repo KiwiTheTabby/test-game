@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3117636929498559880, guid: 8d9608ed9a527ad4e899e40f35fbf2b0, type: 3}
       propertyPath: chance
-      value: 25
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3117636929498559880, guid: 8d9608ed9a527ad4e899e40f35fbf2b0, type: 3}
       propertyPath: health

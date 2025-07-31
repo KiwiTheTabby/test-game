@@ -31,8 +31,8 @@ public class Life : MonoBehaviour
     }
 
     public void Drop(float chance, GameObject drop)
-    {
-        if (Random.Range(1, chance) == 1)
+    { 
+        if (Random.Range(0, chance) <= 1)
         {
             Instantiate(drop, transform.position, transform.rotation);
         }
