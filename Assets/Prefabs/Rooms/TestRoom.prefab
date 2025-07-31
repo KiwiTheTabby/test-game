@@ -2149,7 +2149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomWidth: 70
-  roomHeight: 76.5
+  roomHeight: 60
 --- !u!1 &4637808785076914774
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8279026152623512426, guid: 4150e49053a8bb4408ea79fa745c53ca, type: 3}
       propertyPath: spawnRate
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8279026152623512426, guid: 4150e49053a8bb4408ea79fa745c53ca, type: 3}
       propertyPath: waveEndTime
-      value: 60
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8279026152623512426, guid: 4150e49053a8bb4408ea79fa745c53ca, type: 3}
       propertyPath: enemies.Array.size
