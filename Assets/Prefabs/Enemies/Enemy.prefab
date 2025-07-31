@@ -130,6 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   maxHealth: 10
+  drop: {fileID: 8558048070363288271, guid: 51cf1ac406eae4241a05699c8605d424, type: 3}
+  chance: 40
 --- !u!61 &8395544227300369124
 BoxCollider2D:
   m_ObjectHideFlags: 0
