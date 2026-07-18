@@ -6,15 +6,16 @@ public class PlayerShooting : MonoBehaviour
 {
     public GameObject bullet;
 
-    public Transform playerTransform;
-    public Transform gunTransform;
+    [SerializeField] private Transform objectTransform;
 
     public float attackSpeed;
-    public float attackTimer;
-    public float angleToMouse;
+    [SerializeField] private float attackTimer;
+    private float angleToMouse;
 
-    public Vector3 mousePosition;
-    public Vector3 mouseDistance;
+    private Vector3 mousePosition;
+    private Vector3 mouseDistance;
+
+    private Quaternion newRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -27,12 +28,12 @@ public class PlayerShooting : MonoBehaviour
     {
 
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseDistance = mousePosition - playerTransform.position;
+        mouseDistance = mousePosition - objectTransform.position;
         mouseDistance.z = 0;
 
         angleToMouse = Mathf.Atan2(mouseDistance.y, mouseDistance.x) * Mathf.Rad2Deg;
 
-        gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angleToMouse - 90f));
+        newRotation = Quaternion.Euler(new Vector3(0, 0, angleToMouse - 90f));
 
 
 
@@ -44,9 +45,9 @@ public class PlayerShooting : MonoBehaviour
         attackTimer += 1 * Time.deltaTime;
     }
 
-    public void Shoot (GameObject  bullet)
+    private void Shoot (GameObject  bullet)
     {
-        Instantiate(bullet, playerTransform.position, gunTransform.rotation);
+        Instantiate(bullet, objectTransform.position, newRotation);
         attackTimer = 0;
     }
 }
