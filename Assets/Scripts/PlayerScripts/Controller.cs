@@ -1,45 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Controller : MonoBehaviour
 {
     public Transform playerTransform;
 
+    [SerializeField] private InputAction moveAction;
+    [SerializeField] private Vector2 moveValue;
+
     public float moveSpeed;
     public float topSpeed;
-    public float horizontalVelocity;
-    public float verticalVelocity;
-    public float friction;
+
+    [SerializeField] private Vector2 velocity;
+    [SerializeField] private float horizontalVelocity;
+    [SerializeField] private float verticalVelocity;
+
+    [SerializeField] private float baseVelocity;
+    [SerializeField] private float friction;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        moveAction = InputSystem.actions.FindAction("Move");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W)) { verticalVelocity += moveSpeed; }
-        if (Input.GetKey(KeyCode.S)) { verticalVelocity -= moveSpeed; }
-        if (Input.GetKey(KeyCode.A)) { horizontalVelocity -= moveSpeed; }
-        if (Input.GetKey(KeyCode.D)) { horizontalVelocity += moveSpeed; }
+        moveValue = moveAction.ReadValue<Vector2>();
 
-        horizontalVelocity *= friction;
+        velocity += moveValue*moveSpeed;
+
+        velocity *= friction;
         verticalVelocity *= friction;
 
-        if (Mathf.Abs(verticalVelocity) < 1) { verticalVelocity = 0; }
-        if (Mathf.Abs(horizontalVelocity) < 1) { horizontalVelocity = 0;}
+        BoundValue(velocity.x, 1, topSpeed, 0);
+        BoundValue(velocity.y, 1, topSpeed, 0);
 
-        if ( horizontalVelocity >= topSpeed ) { horizontalVelocity = topSpeed; }
-        else if (horizontalVelocity <= -topSpeed ) { horizontalVelocity = -topSpeed; }
+        transform.Translate(velocity.x * Time.deltaTime, velocity.y * Time.deltaTime, 0);
+    }
 
-        if (verticalVelocity >= topSpeed) { verticalVelocity = topSpeed; }
-        else if (verticalVelocity <= -topSpeed) { verticalVelocity = -topSpeed; }
-
-        transform.Translate(horizontalVelocity * Time.deltaTime, verticalVelocity * Time.deltaTime, 0);
-        
-
+    private void BoundValue (float value, float floor, float maximum, float minimum)
+    {
+        if (Mathf.Abs(value) < floor) { value = minimum; }
+        if ( value >= maximum ) { value = maximum; }
+        if (value <= -maximum ) { value = -maximum; }
     }
 }

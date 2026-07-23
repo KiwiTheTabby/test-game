@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -17,15 +18,19 @@ public class PlayerShooting : MonoBehaviour
 
     private Quaternion newRotation;
 
+    [SerializeField] private InputAction attackAction;
+    private bool isAttacking;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        attackAction = InputSystem.actions.FindAction("Attack");
     }
 
     // Update is called once per frame
     void Update()
     {
+        isAttacking = attackAction.ReadValue<bool>();
 
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseDistance = mousePosition - objectTransform.position;
@@ -37,7 +42,7 @@ public class PlayerShooting : MonoBehaviour
 
 
 
-        if (Input.GetKey(KeyCode.Space) && attackTimer > attackSpeed)
+        if (isAttacking && attackTimer > attackSpeed)
         {
             Shoot(bullet);
         }
