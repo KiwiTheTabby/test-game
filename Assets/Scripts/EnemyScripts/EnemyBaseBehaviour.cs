@@ -8,16 +8,16 @@ public class EnemyBaseBehaviour : MonoBehaviour
 
     public Vision vision;
 
-    public Vector3 playerDistance;
+    [SerializeField] private Vector3 playerDistance;
 
     public EnemyStates currentState;
 
     public float contactDamage;
 
-    public float angleToPlayer;
+    [SerializeField] private float angleToPlayer;
 
     public float moveSpeed;
-    public float currentSpeed;
+    [SerializeField] private float currentSpeed;
     public float maxSpeed;
     public float timerForResting;
     public float lengthWhenResting;
@@ -26,9 +26,9 @@ public class EnemyBaseBehaviour : MonoBehaviour
 
     public int movementFrequency;
 
-    public bool onAlert;
+    [SerializeField] private bool onAlert;
 
-    public float timeSinceAlert;
+    [SerializeField] private float timeSinceAlert;
 
     public enum EnemyStates
     {

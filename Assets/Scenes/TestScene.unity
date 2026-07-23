@@ -156,6 +156,15 @@ MonoBehaviour:
   objectTransform: {fileID: 294434771}
   attackSpeed: 0.3
   attackTimer: 0
+  attackAction:
+    m_Name: Attack
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a56195b5-0fd7-4469-9f2d-828bd01f7106
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!114 &1026327983 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7222481550175504901, guid: fa8766cba1df7a345a3caef77e0f1ea6, type: 3}
