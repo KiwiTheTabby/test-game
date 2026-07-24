@@ -10,25 +10,30 @@ public class Life : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if (health <= 0)
         {
-            if (this.GetComponent<DropItems>() != null)
-            {
-            this.GetComponent<DropItems>().Drop(this.GetComponent<DropItems>().chance, this.GetComponent<DropItems>().drop);
-            }
-            Destroy(gameObject);
+            Die();
         }
 
         if (health > maxHealth)
         {
             health = maxHealth;
         }
+    }
+
+    public virtual void Die()
+    {
+        if (this.GetComponent<DropItems>() != null)
+        {
+            this.GetComponent<DropItems>().Drop(this.GetComponent<DropItems>().chance, this.GetComponent<DropItems>().drop);
+        }
+        Destroy(gameObject);    
     }
 
     
