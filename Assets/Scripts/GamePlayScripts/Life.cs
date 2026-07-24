@@ -7,8 +7,6 @@ public class Life : MonoBehaviour
     public float health;
     public int maxHealth;
 
-    public GameObject drop;
-    public float chance;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +18,10 @@ public class Life : MonoBehaviour
     {
         if (health <= 0)
         {
-            Drop(chance, drop);
+            if (this.GetComponent<DropItems>() != null)
+            {
+            this.GetComponent<DropItems>().Drop(this.GetComponent<DropItems>().chance, this.GetComponent<DropItems>().drop);
+            }
             Destroy(gameObject);
         }
 
@@ -30,11 +31,5 @@ public class Life : MonoBehaviour
         }
     }
 
-    public void Drop(float chance, GameObject drop)
-    { 
-        if (Random.Range(0, chance) <= 1)
-        {
-            Instantiate(drop, transform.position, transform.rotation);
-        }
-    }
+    
 }

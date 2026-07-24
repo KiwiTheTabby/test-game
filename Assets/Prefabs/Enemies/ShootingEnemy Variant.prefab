@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5075439184696282431, guid: 8d9608ed9a527ad4e899e40f35fbf2b0, type: 3}
+      propertyPath: chance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5615975515359118272, guid: 8d9608ed9a527ad4e899e40f35fbf2b0, type: 3}
       propertyPath: m_Name
       value: ShootingEnemy Variant
